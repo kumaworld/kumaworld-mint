@@ -4,7 +4,10 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   assetPrefix: '.',
-  defaultLocale: 'en-US',
+  i18n: {
+      locales: ['en'],
+      defaultLocale: 'en',
+  },
   images: {
     loader: "imgix",
     path: "https://noop/",
