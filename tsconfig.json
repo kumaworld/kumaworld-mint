@@ -15,9 +15,7 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "typeRoots": [
-    "./types"
-  ],
+  "typeRoots": ["./node_modules/@types", "./src/types"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/kuma.jsx"],
   "exclude": ["node_modules"]
 }
