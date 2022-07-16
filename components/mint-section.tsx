@@ -82,6 +82,14 @@ const MintSection = (): JSX.Element => {
         <Grid item xs={3} />
         <Grid item xs={6}>
           <LoadingButton
+           sx={{
+            fontWeight: 'bold',
+            borderRadius: '100px',
+            backgroundColor: 'tomato',
+            "&:hover": {
+              backgroundColor: '#af321c',
+            }
+           }}
            loading={loading}
            className={styles.mintButton}
            color="primary"
