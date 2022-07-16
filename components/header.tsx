@@ -5,8 +5,6 @@ import { FaTwitter } from 'react-icons/fa'
 import styles from '../styles/Header.module.css'
 import AccountButton from './account-button'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
-import openseaLogo from '../public/opensea-logo.png'
 
 const Header = (): JSX.Element => {
   const router = useRouter()
@@ -19,18 +17,18 @@ const Header = (): JSX.Element => {
             <FaTwitter color="#1DA1F2"/>
           </IconButton>
           <IconButton sx={{ background: 'white' }}>
-            <Image src={openseaLogo} alt="opensea-logo" height={27} width={27} />
+            <img src={'https://storage.googleapis.com/opensea-static/Logomark/Logomark-White.png'} alt="opensea-logo" height={27} width={27} />
           </IconButton>
         </Grid>
         <Grid item xs={0} md={4} sx={{display: { xs: 'none', md: 'block' }}}/>
-        <Grid item xs={3} md={2} textAlign="center">
+        <Grid item xs={3} md={2} textAlign="center"  className={`${styles.tab} ${!router.pathname.includes('history') ? styles.active : ''}`}>
           <Link href="/">
-            <p className={`${styles.link} ${!router.pathname.includes('history') ? styles.active : ''}`}>Mint</p>
+            <p className={styles.link}>Mint</p>
           </Link>
         </Grid>
-        <Grid item xs={4} md={2} textAlign="center">
+        <Grid item xs={4} md={2} textAlign="center"  className={`${styles.tab} ${router.pathname.includes('history') ? styles.active : ''}`}>
           <Link href="/history" className={styles.link}>
-            <p className={`${styles.link} ${router.pathname.includes('history') ? styles.active : ''}`}>History</p>
+            <p className={styles.link}>History</p>
           </Link>
         </Grid>
         <Grid item xs={3} md={2} textAlign="center">

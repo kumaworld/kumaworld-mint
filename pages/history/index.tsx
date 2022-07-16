@@ -2,8 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Footer from '../../components/footer'
 import Header from '../../components/header'
-import styles from '../../styles/Home.module.css'
-import historyStyles from '../../styles/History.module.css'
+import styles from '../../styles/History.module.css'
 
 const History: NextPage = () => {
   return (
@@ -25,7 +24,7 @@ const History: NextPage = () => {
       <Header />
       <main className={styles.main}>
 
-      <div className={historyStyles.container}>
+      <div className={styles.playerContainer}>
         <div>
           <object width="420" height="315">
             <param name="movie" value="https://www.youtube.com/v/EjMNNpIksaI?version=3&amp;hl=en_US&autoplay=1&amp;autohide=2"></param>
@@ -36,14 +35,14 @@ const History: NextPage = () => {
         </div>
       </div>
 
-      <p id={historyStyles.start}>A short time ago in a block chain very, very close&hellip;</p>
+      <p id={styles.start}>A short time ago in a block chain very, very close&hellip;</p>
 
-      <h1 className={historyStyles.h1}>KUMA WARS<sub>Free mint</sub></h1>
+      <h1 className={styles.h1}>KUMA WARS<sub>Free mint</sub></h1>
 
-      <div id={historyStyles.titles}>
-        <div id={historyStyles.titlecontent}>
+      <div id={styles.titles}>
+        <div id={styles.titlecontent}>
 
-          <p className={historyStyles.center}>EPISODE IV<br />
+          <p className={styles.center}>EPISODE IV<br />
             A NEW HOPE FOR KUMAS</p>
 
           <p>It is a period of Kuma war.</p>
@@ -60,7 +59,7 @@ const History: NextPage = () => {
 
           <p>The kumas will use the money from royalties and sales to create new creative forms of NFTs collections, we have more ideas for new interactive collections.</p>
 
-          <p className={historyStyles.center}>Buy Kuma, Luke!</p>
+          <p className={styles.center}>Buy Kuma, Luke!</p>
         
           <p>Sorry. Could not resist it.</p>
         
