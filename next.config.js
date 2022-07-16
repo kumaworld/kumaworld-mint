@@ -3,7 +3,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  assetPrefix: './'
+  assetPrefix: './',
   images: {
     loader: "imgix",
     path: "https://noop/",
