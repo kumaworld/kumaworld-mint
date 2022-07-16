@@ -1,0 +1,26 @@
+.link {
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-bottom: 12px;
+}
+
+.active {
+  border-bottom: 3px solid white;
+}
+
+.link:hover {
+  border-bottom: 3px solid white;
+}
+
+.wallet {
+  color: white;
+  font-weight: bold;
+}
+
+.button {
+  padding: 8px;
+  border-radius: 100px;
+}
