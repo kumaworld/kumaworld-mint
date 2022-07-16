@@ -1,15 +1,17 @@
 /** @type {import('next').NextConfig} */
-const withOptimizedImages = require('next-optimized-images');
 
-const nextConfig = withOptimizedImages({
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    unoptimized: true,
+  },
   exportPathMap: async function () {
     return {
       '/': { page: '/' },
       '/history': { page: '/history' },
     }
   },
-})
+}
 
 module.exports = nextConfig
