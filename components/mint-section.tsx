@@ -7,7 +7,9 @@ import { useState } from 'react';
 import { selectAuth } from '../stores/auth-slice';
 import { useAppDispatch, useAppSelector } from '../stores/hooks';
 import { ethers } from 'ethers';
+import KumaWorld from '../utils/KumaWorld.json'
 import { selectKuma, setIsAdopting, setTexts } from '../stores/kuma-slice';
+import { CONTRACT_ADDRESS } from '../utils/constants';
 
 const MintSection = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -38,17 +40,17 @@ const MintSection = (): JSX.Element => {
       const { ethereum } = window;
 
       if (ethereum) {
-        // const provider = new ethers.providers.Web3Provider(ethereum);
-        // const signer = provider.getSigner()
-        // const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer)
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner()
+        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer)
 
-        // let nftTxn = await connectedContract.makeAnEpicNFT()
+        let nftTxn = await connectedContract.makeAnEpicNFT()
 
         dispatch(setIsAdopting(true))
         dispatch(setTexts(['Adopting bears...', 'Waiting...', 'Generating kumas...']))
-        // await nftTxn.wait()
-        // console.log(nftTxn)
-        // dispatch(setTexts([`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`))
+        await nftTxn.wait()
+        console.log(nftTxn)
+        dispatch(setTexts([`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`]))
       } else {
         console.log("Ethereum object doesn't exist")
         dispatch(setTexts(['First install Metamask', 'Why are you taking so long ?']))

@@ -7,7 +7,9 @@ import { selectAuth, setAccount } from '../stores/auth-slice'
 import { useAppDispatch, useAppSelector } from '../stores/hooks'
 import { setIsAdopting, setTexts } from '../stores/kuma-slice';
 import styles from '../styles/Header.module.css'
+import { CONTRACT_ADDRESS } from '../utils/constants'
 import AppMenu from './app-menu'
+import KumaWorld from '../utils/KumaWorld.json'
 
 const AccountButton = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -76,12 +78,12 @@ const AccountButton = (): JSX.Element => {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-        //const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
 
-        //connectedContract.on("NewAdoptedKumas", (from, tokenId) => {
-        //  dispatch(setTexts(['Thanks for adopting kuma', 'Enter opensea on your kuma page and ask kuma your question']))
-        //    dispatch(setIsAdopting(false))
-        //})
+        connectedContract.on("NewAdoptedKumas", (from, tokenId) => {
+          dispatch(setTexts(['Thanks for adopting kuma', 'Enter opensea on your kuma page and ask kuma your question']))
+            dispatch(setIsAdopting(false))
+        })
         console.log("Setup event listener!")
       } else {
         dispatch(setTexts(['First install Metamask', 'Why are you taking so long ?']))

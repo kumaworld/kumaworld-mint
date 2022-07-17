@@ -5,6 +5,8 @@ import { selectKuma, setTexts } from '../stores/kuma-slice'
 import { selectAuth } from '../stores/auth-slice';
 import { FormControl, InputLabel, Select, OutlinedInput, MenuItem, Checkbox, ListItemText, Typography } from '@mui/material';
 import { ethers } from 'ethers';
+import { CONTRACT_ADDRESS } from '../utils/constants';
+import KumaWorld from '../utils/KumaWorld.json'
 
 import styles from '../styles/AskToTheKuma.module.css'
 
@@ -18,7 +20,7 @@ const AskToTheKuma = () => {
     const getTotalSupply = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
       let count = await connectedContract.MAX_KUMAS;
 
@@ -27,7 +29,7 @@ const AskToTheKuma = () => {
     const getPrice = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
       let count = await connectedContract.PRICE
 
@@ -36,7 +38,7 @@ const AskToTheKuma = () => {
     const getQtyFreeMint = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
       let count = await connectedContract.MAX_FREE_PER_WALLET
 
@@ -45,7 +47,7 @@ const AskToTheKuma = () => {
     const getPerWallet = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
       let count = await connectedContract.MAX_KUMAS_PER_WALLET
 
@@ -54,7 +56,7 @@ const AskToTheKuma = () => {
     const getTotalMinted = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
       let minted = await connectedContract.totalSupply()
       let total = await connectedContract.MAX_KUMAS;
@@ -64,7 +66,7 @@ const AskToTheKuma = () => {
     const getHasStillFree = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
       let freeKumas = await connectedContract.MAX_FREE_KUMAS_SUPPLY
       let minted = await connectedContract.totalSupply()
