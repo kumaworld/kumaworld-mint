@@ -22,7 +22,9 @@ const AskToTheKuma = () => {
       const signer = provider.getSigner();
       const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
-      let count = await connectedContract.MAX_KUMAS;
+      console.log(connectedContract)
+      console.log(signer)
+      let count = await connectedContract.MAX_KUMAS();
 
       dispatch(setTexts([`There are a total of ${count._hex.substring(3)} Kumas`]))
     }
@@ -31,7 +33,7 @@ const AskToTheKuma = () => {
       const signer = provider.getSigner();
       const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
-      let count = await connectedContract.PRICE
+      let count = await connectedContract.PRICE()
 
       dispatch(setTexts([`The price of each kuma after taking the free one is ${count._hex.substring(3)} ethers`]))
     }
@@ -40,7 +42,7 @@ const AskToTheKuma = () => {
       const signer = provider.getSigner();
       const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
-      let count = await connectedContract.MAX_FREE_PER_WALLET
+      let count = await connectedContract.MAX_FREE_PER_WALLET()
 
       dispatch(setTexts([`It is ${count._hex.substring(3)} kumas for free per wallet`]))
     }
@@ -49,7 +51,7 @@ const AskToTheKuma = () => {
       const signer = provider.getSigner();
       const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
-      let count = await connectedContract.MAX_KUMAS_PER_WALLET
+      let count = await connectedContract.MAX_KUMAS_PER_WALLET()
 
       dispatch(setTexts([`It is ${count._hex.substring(3)} kumas per wallet`]))
     }
@@ -59,7 +61,7 @@ const AskToTheKuma = () => {
       const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
       let minted = await connectedContract.totalSupply()
-      let total = await connectedContract.MAX_KUMAS;
+      let total = await connectedContract.MAX_KUMAS();
 
       dispatch(setTexts([`Has already been adopted ${minted._hex.substring(3)}}/${total._hex.substring(3)}} kumas` ]))
     }
@@ -68,7 +70,7 @@ const AskToTheKuma = () => {
       const signer = provider.getSigner();
       const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
-      let freeKumas = await connectedContract.MAX_FREE_KUMAS_SUPPLY
+      let freeKumas = await connectedContract.MAX_FREE_KUMAS_SUPPLY()
       let minted = await connectedContract.totalSupply()
 
       const stillHasFree = parseInt(minted._hex.substring(3)) < parseInt(freeKumas._hex.substring(3))

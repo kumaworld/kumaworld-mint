@@ -38,8 +38,8 @@ const AccountButton = (): JSX.Element => {
         const account = accounts[0];
         console.log("Found an authorized account:", account);
         dispatch(setAccount(account))
-        dispatch(setTexts([`Welcome back ${account}`]))
-        await setupEventListener()
+        dispatch(setTexts([`Welcome back kuma holder`]))
+        //await setupEventListener()
 
         return
       }
@@ -62,9 +62,9 @@ const AccountButton = (): JSX.Element => {
 
       console.log("Connected", accounts[0])
       dispatch(setAccount(accounts[0]))
-      dispatch(setTexts([`Welcome ${account}`]))
+      dispatch(setTexts([`Welcome kuma holder`]))
 
-      await setupEventListener()
+      //await setupEventListener()
     } catch (error) {
       dispatch(setTexts(['Error !!!!, try again']))
       console.log(error)
@@ -76,15 +76,15 @@ const AccountButton = (): JSX.Element => {
       const { ethereum } = window;
 
       if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
+        //const provider = new ethers.providers.Web3Provider(ethereum);
+        //const signer = provider.getSigner();
+        //const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
 
-        connectedContract.on("NewAdoptedKumas", (from, tokenId) => {
-          dispatch(setTexts(['Thanks for adopting kuma', 'Enter opensea on your kuma page and ask kuma your question']))
-            dispatch(setIsAdopting(false))
-        })
-        console.log("Setup event listener!")
+        //connectedContract.on("NewAdoptedKumas", (from, tokenId) => {
+        //  dispatch(setTexts(['Thanks for adopting kuma', 'Enter opensea on your kuma page and ask kuma your question']))
+        //    dispatch(setIsAdopting(false))
+        //})
+        // console.log("Setup event listener!")
       } else {
         dispatch(setTexts(['First install Metamask', 'Why are you taking so long ?']))
         console.log("Ethereum object doesn't exist")

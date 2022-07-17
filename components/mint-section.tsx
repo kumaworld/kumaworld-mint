@@ -44,7 +44,7 @@ const MintSection = (): JSX.Element => {
         const signer = provider.getSigner()
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer)
 
-        let nftTxn = await connectedContract.makeAnEpicNFT()
+        let nftTxn = await connectedContract.mint()
 
         dispatch(setIsAdopting(true))
         dispatch(setTexts(['Adopting bears...', 'Waiting...', 'Generating kumas...']))
