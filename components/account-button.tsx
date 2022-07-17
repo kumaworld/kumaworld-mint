@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { FaArrowCircleRight } from 'react-icons/fa'
 import { selectAuth, setAccount } from '../stores/auth-slice'
 import { useAppDispatch, useAppSelector } from '../stores/hooks'
-import { setTexts } from '../stores/kuma-slice'
+import { setIsAdopting, setTexts } from '../stores/kuma-slice';
 import styles from '../styles/Header.module.css'
 import AppMenu from './app-menu'
 
@@ -78,7 +78,9 @@ const AccountButton = (): JSX.Element => {
         const signer = provider.getSigner();
         //const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
 
-        //connectedContract.on("NewEpicNFTMinted", (from, tokenId) => {
+        //connectedContract.on("NewAdoptedKumas", (from, tokenId) => {
+        //  dispatch(setTexts(['Thanks for adopting kuma', 'Enter opensea on your kuma page and ask kuma your question']))
+        //    dispatch(setIsAdopting(false))
         //})
         console.log("Setup event listener!")
       } else {

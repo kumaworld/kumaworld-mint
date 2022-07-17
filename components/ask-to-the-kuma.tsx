@@ -2,45 +2,106 @@
 import {  useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../stores/hooks'
 import { selectKuma, setTexts } from '../stores/kuma-slice'
+import { selectAuth } from '../stores/auth-slice';
+import { FormControl, InputLabel, Select, OutlinedInput, MenuItem, Checkbox, ListItemText, Typography } from '@mui/material';
+import { ethers } from 'ethers';
 
 import styles from '../styles/AskToTheKuma.module.css'
-import { FormControl, InputLabel, Select, OutlinedInput, MenuItem, Checkbox, ListItemText, Typography } from '@mui/material';
 
 const AskToTheKuma = () => {
   const dispatch = useAppDispatch()
   const { texts } = useAppSelector(selectKuma)
   const [question, setQuestion] = useState('')
+  const { account } = useAppSelector(selectAuth)
 
   useEffect(() => {
     const getTotalSupply = async () => {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      
+      let count = await connectedContract.MAX_KUMAS;
+
+      dispatch(setTexts([`There are a total of ${count._hex.substring(3)} Kumas`]))
     }
     const getPrice = async () => {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      
+      let count = await connectedContract.PRICE
+
+      dispatch(setTexts([`The price of each kuma after taking the free one is ${count._hex.substring(3)} ethers`]))
     }
     const getQtyFreeMint = async () => {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      
+      let count = await connectedContract.MAX_FREE_PER_WALLET
+
+      dispatch(setTexts([`It is ${count._hex.substring(3)} kumas for free per wallet`]))
     }
     const getPerWallet = async () => {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      
+      let count = await connectedContract.MAX_KUMAS_PER_WALLET
+
+      dispatch(setTexts([`It is ${count._hex.substring(3)} kumas per wallet`]))
     }
     const getTotalMinted = async () => {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      
+      let minted = await connectedContract.totalSupply()
+      let total = await connectedContract.MAX_KUMAS;
+
+      dispatch(setTexts([`Has already been adopted ${minted._hex.substring(3)}}/${total._hex.substring(3)}} kumas` ]))
     }
     const getHasStillFree = async () => {
-      dispatch(setTexts(['eita']))
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      
+      let freeKumas = await connectedContract.MAX_FREE_KUMAS_SUPPLY
+      let minted = await connectedContract.totalSupply()
+
+      const stillHasFree = parseInt(minted._hex.substring(3)) < parseInt(freeKumas._hex.substring(3))
+      let texts = ['No more free kumas']
+
+      if (stillHasFree) {
+        texts = [`Still have ${parseInt(freeKumas._hex.substring(3)) - parseInt(minted._hex.substring(3))} more kumas to be adopted`] 
+      }
+
+      dispatch(setTexts(texts))
     }
 
     if (question === '') {
       return
     }
 
+    if (!window.ethereum || account === '') {
+      dispatch(setTexts(['Kuma needs you to be logged in to answer his question']))
+      return
+    }
+
     if (question === 'totalSupply') {
       getTotalSupply()
     }
+    if (question === 'price') {
+      getPrice()
+    }
     if (question === 'maxFreeMint') {
-      getTotalSupply()
+      getQtyFreeMint()
     }
     if (question === 'maxPerWallet') {
-      getTotalSupply()
+      getPerWallet()
     }
     if (question === 'qtyMinted') {
-      getTotalSupply()
+      getTotalMinted()
     }
     if (question === 'freeMints') {
       getHasStillFree()

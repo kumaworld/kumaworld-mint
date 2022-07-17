@@ -5,10 +5,12 @@ import { RootState } from './store'
 
 export type KumaState = {
   texts: string[]
+  isAdopting: boolean
 }
 
 const initialState: KumaState = {
-  texts: ['Welcome to the Kuma world', 'Connect wallet and adopt a kuma']
+  texts: ['Welcome to the Kuma world', 'Connect wallet and adopt a kuma'],
+  isAdopting: false,
 }
 
 export const kumaSlice = createSlice({
@@ -18,10 +20,13 @@ export const kumaSlice = createSlice({
     setTexts: (state, { payload }) => {
       state.texts = payload
     },
+    setIsAdopting: (state, { payload }) => {
+      state.isAdopting = payload
+    },
   },
 })
 
-export const {  setTexts } = kumaSlice.actions
+export const {  setTexts, setIsAdopting } = kumaSlice.actions
 
 export const selectKuma = (state: RootState): KumaState =>
   state.kuma

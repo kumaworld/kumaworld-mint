@@ -7,14 +7,13 @@ import { useState } from 'react';
 import { selectAuth } from '../stores/auth-slice';
 import { useAppDispatch, useAppSelector } from '../stores/hooks';
 import { ethers } from 'ethers';
-import { setTexts } from '../stores/kuma-slice';
+import { selectKuma, setIsAdopting, setTexts } from '../stores/kuma-slice';
 
 const MintSection = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const { account } = useAppSelector(selectAuth)
+  const { isAdopting } = useAppSelector(selectKuma)
   const [qty, setQty] = useState(1)
-  const [loading, setLoading] = useState(false)
-  const limit = 10
 
   const onClickIncrease = () => {
     const increment = qty + 1 
@@ -45,12 +44,11 @@ const MintSection = (): JSX.Element => {
 
         // let nftTxn = await connectedContract.makeAnEpicNFT()
 
-        setLoading(true);
+        dispatch(setIsAdopting(true))
         dispatch(setTexts(['Adopting bears...', 'Waiting...', 'Generating kumas...']))
         // await nftTxn.wait()
         // console.log(nftTxn)
-        // dispatch(setTexts([`Mined, tee transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`))
-        setLoading(false)
+        // dispatch(setTexts([`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`))
       } else {
         console.log("Ethereum object doesn't exist")
         dispatch(setTexts(['First install Metamask', 'Why are you taking so long ?']))
@@ -58,6 +56,7 @@ const MintSection = (): JSX.Element => {
     } catch (error) {
       dispatch(setTexts(['Error !!!!, try again']))
       console.log(error)
+      dispatch(setIsAdopting(false))
     }
   }
 
@@ -90,14 +89,14 @@ const MintSection = (): JSX.Element => {
               backgroundColor: '#af321c',
             }
            }}
-           loading={loading}
+           loading={isAdopting}
            className={styles.mintButton}
            color="primary"
            disabled={account.length <= 0}
            variant="contained"
            onClick={onClickMint}
            startIcon={<FaPaw />}>
-            {loading ? 'Adopting Kumas' : 'Adopt kuma'}
+            {isAdopting ? 'Adopting Kumas' : 'Adopt kuma'}
           </LoadingButton>
         </Grid>
         <Grid item xs={3} />
