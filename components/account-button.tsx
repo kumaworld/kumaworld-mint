@@ -101,7 +101,7 @@ const AccountButton = (): JSX.Element => {
 
   return (
     <>
-      <Button className={styles.button} variant="contained" size="small" sx={{ borderRadius: '100px', p: '8px' }}>
+      <Button className={styles.button} variant="contained" size="small" sx={{ fontWeight: 'bold', borderRadius: '100px', p: '8px', width: '100%' }}>
         <Typography className={styles.wallet} onClick={account != '' ? handleClick : onClickConnectWallet}>
           {account != '' ? account : 'Connect wallet'}
         </Typography>

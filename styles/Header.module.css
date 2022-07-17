@@ -18,6 +18,10 @@
 .wallet {
   color: white;
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  white-space: nowrap;
 }
 
 .button {
