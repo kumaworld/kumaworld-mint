@@ -56,7 +56,7 @@ const MintSection = (): JSX.Element => {
           count = qty - 1
         }
 
-        let mintPrice = count * ethers.utils.formatEther(price)
+        let mintPrice = count * parseFloat(ethers.utils.formatEther(price))
 
         const nftTxn = await connectedContract.mint(qty, { value: BigNumber.from(mintPrice) })
 
