@@ -4,6 +4,8 @@ import { useAppSelector } from '../stores/hooks'
 import { selectKuma } from '../stores/kuma-slice'
 import styles from '../styles/Kuma.module.css'
 import Typewriter from 'typewriter-effect';
+import { CONTRACT_ADDRESS } from '../utils/constants'
+import KumaWorld from '../utils/KumaWorld.json'
 import { ethers } from 'ethers'
 
 const Kuma = () => {
