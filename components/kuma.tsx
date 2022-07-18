@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../stores/hooks'
-import { selectKuma, setTexts } from '../stores/kuma-slice'
+import { selectKuma, setTexts, setSoldOut } from '../stores/kuma-slice'
 import styles from '../styles/Kuma.module.css'
 import Typewriter from 'typewriter-effect';
 import { CONTRACT_ADDRESS } from '../utils/constants'
@@ -13,22 +13,33 @@ const Kuma = () => {
   const { texts } = useAppSelector(selectKuma)
   const [ballonVisible, setBallonVisible] = useState(false)
   const [index, setIndex] = useState(0)
-
-  const watchSupplyFunction = async () => {
-    const { ethereum } = window;
-
-    if (!ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner()
-      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer)
-      let minted = await connectedContract.totalSupply()
-      let maxKumas = await connectedContract.MAX_KUMAS()
-
-      if (minted === maxKumas) {
-        dispatch(setTexts(['Sold out, buy kumas in opensea?']))
+  const [check, setCheck] = useState(0)
+  
+  useEffect(() => {
+      const watchSupplyFunction = async () => {
+        const { ethereum } = window;
+    
+        if (!ethereum) {
+          const provider = new ethers.providers.Web3Provider(ethereum);
+          const signer = provider.getSigner()
+          const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer)
+          let minted = await connectedContract.totalSupply()
+          let maxKumas = await connectedContract.MAX_KUMAS()
+    
+          if (minted === maxKumas) {
+            dispatch(setSoldOut(true))
+            dispatch(setTexts(['Sold out, buy kumas in opensea']))
+          }
+        }
       }
-    }
-  }
+
+      const id = setInterval(async () => {
+          await watchSupplyFunction()
+          setCheck(check + 1)
+      }, 3000);
+
+      return () => clearInterval(id);
+  }, [check])
 
   useEffect(() => {
     setIndex(index)

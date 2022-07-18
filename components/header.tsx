@@ -18,8 +18,15 @@ const Header = (): JSX.Element => {
           }}>
             <FaTwitter color="#1DA1F2"/>
           </IconButton>
-          <IconButton sx={{ background: 'white' }}>
+          <IconButton sx={{ background: 'white', mr: 2 }} onClick={() => {
+            window.open('https://twitter.com/TheKumaWorld', '_blank')
+          }}>
             <img src={'https://storage.googleapis.com/opensea-static/Logomark/Logomark-White.png'} alt="opensea-logo" height={27} width={27} />
+          </IconButton>
+          <IconButton sx={{ background: 'white', mr: 2 }} onClick={() => {
+            window.open('https://twitter.com/TheKumaWorld', '_blank')
+          }}>
+            <img src={'https://etherscan.io/images/brandassets/etherscan-logo-circle.png'} alt="opensea-logo" height={27} width={27} />
           </IconButton>
         </Grid>
         <Grid item xs={0} md={4} sx={{display: { xs: 'none', md: 'block' }}}/>

@@ -46,21 +46,19 @@ const MintSection = (): JSX.Element => {
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer)
       
         const price = await connectedContract.PRICE()
+        const totalMinted = await connectedContract.totalSupply()
         const freeMints = await connectedContract.MAX_FREE_KUMAS_SUPPLY()
 
         const qtyFreeMinted = await connectedContract.qtyFreeMinted(account)
 
         let count = qty
-        if (parseInt(qtyFreeMinted._hex, 16) <= 0) {
+        if (parseInt(totalMinted._hex, 16) < parseInt(freeMints._hex, 16) && parseInt(qtyFreeMinted._hex, 16) <= 0) {
           count = qty - 1
         }
 
         let mintPrice = count * parseFloat(ethers.utils.formatEther(price))
-
-        console.log(Number(mintPrice * 1e18).toString())
-        console.log(price)
-        console.log(ethers.BigNumber.from(Number(mintPrice * 1e18).toString()))
-        const nftTxn = await connectedContract.mint(qty, { value: ethers.BigNumber.from(Number(mintPrice * 1e18).toString()) })
+      
+        const nftTxn = await connectedContract.mint(qty, { value: ethers.utils.parseEther(mintPrice.toString()) })
 
         dispatch(setTexts(['Adopting bears...', 'Waiting...', 'Generating kumas...']))
         await nftTxn.wait()

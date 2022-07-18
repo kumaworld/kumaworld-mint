@@ -76,7 +76,7 @@ const AskToTheKuma = () => {
       let texts = ['No more free kumas']
 
       if (stillHasFree) {
-        texts = [`Still have ${parseInt(freeKumas._hex, 16) - parseInt(minted._hex, 16)} more kumas to be adopted`] 
+        texts = [`Still have ${parseInt(freeKumas._hex, 16) - parseInt(minted._hex, 16)} more free kumas to be adopted`] 
       }
 
       dispatch(setTexts(texts))
