@@ -97,6 +97,7 @@ const AccountButton = (): JSX.Element => {
 
   const onClickLogout = () => {
     dispatch(setAccount(''))
+    handleClose()
   }
 
   return (

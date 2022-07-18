@@ -55,7 +55,8 @@ const MintSection = (): JSX.Element => {
           count = qty - 1
         }
 
-        let mintPrice = count * parseFloat(ethers.utils.formatEther(price))
+        let mintPrice = count * price
+        console.log(ethers.BigNumber.from(mintPrice))
 
         const nftTxn = await connectedContract.mint(qty, { value: ethers.BigNumber.from(mintPrice) })
 
@@ -63,7 +64,7 @@ const MintSection = (): JSX.Element => {
         dispatch(setTexts(['Adopting bears...', 'Waiting...', 'Generating kumas...']))
         await nftTxn.wait()
         console.log(nftTxn)
-        dispatch(setTexts([`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`]))
+        dispatch(setTexts([`Mined, see transaction in you wallet`]))
       } else {
         console.log("Ethereum object doesn't exist")
         dispatch(setTexts(['First install Metamask', 'Why are you taking so long ?']))
@@ -79,7 +80,13 @@ const MintSection = (): JSX.Element => {
     <div className={styles.mintSection}>
       <Grid className={styles.qtyMint} container textAlign="center" alignItems="center">
         <Grid item xs={4}>
-          <IconButton className={styles.actionIcon} onClick={onClickDecrement}>
+          <IconButton className={styles.actionIcon} onClick={onClickDecrement} sx={{
+            background: 'white',
+            fontWeight: 'bold',
+            "&:hover": {
+              backgroundColor: 'lightgray',
+            }
+          }}>
             <FaMinus />
           </IconButton>
         </Grid>
@@ -87,7 +94,13 @@ const MintSection = (): JSX.Element => {
           <TextField className={styles.input} value={qty} disabled/>
         </Grid>
         <Grid item xs={4}>
-          <IconButton className={styles.actionIcon} onClick={onClickIncrease}>
+          <IconButton className={styles.actionIcon} onClick={onClickIncrease} sx={{
+            background: 'white',
+            fontWeight: 'bold',
+            "&:hover": {
+              backgroundColor: 'lightgray',
+            }
+          }}>
             <FaPlus />
           </IconButton>
         </Grid>
