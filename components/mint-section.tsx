@@ -10,7 +10,6 @@ import { ethers } from 'ethers';
 import KumaWorld from '../utils/KumaWorld.json'
 import { selectKuma, setIsAdopting, setTexts } from '../stores/kuma-slice';
 import { CONTRACT_ADDRESS } from '../utils/constants';
-import BigNumber from 'bignumber.js'
 
 const MintSection = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -58,7 +57,7 @@ const MintSection = (): JSX.Element => {
 
         let mintPrice = count * parseFloat(ethers.utils.formatEther(price))
 
-        const nftTxn = await connectedContract.mint(qty, { value: BigNumber.from(mintPrice) })
+        const nftTxn = await connectedContract.mint(qty, { value: ethers.BigNumber.from(mintPrice) })
 
         dispatch(setIsAdopting(true))
         dispatch(setTexts(['Adopting bears...', 'Waiting...', 'Generating kumas...']))
