@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react'
-import { useAppSelector } from '../stores/hooks'
-import { selectKuma } from '../stores/kuma-slice'
+import { useAppSelector, useAppDispatch } from '../stores/hooks'
+import { selectKuma, setTexts } from '../stores/kuma-slice'
 import styles from '../styles/Kuma.module.css'
 import Typewriter from 'typewriter-effect';
 import { CONTRACT_ADDRESS } from '../utils/constants'
@@ -9,6 +9,7 @@ import KumaWorld from '../utils/KumaWorld.json'
 import { ethers } from 'ethers'
 
 const Kuma = () => {
+  const dispatch = useAppDispatch()
   const { texts } = useAppSelector(selectKuma)
   const [ballonVisible, setBallonVisible] = useState(false)
   const [index, setIndex] = useState(0)
@@ -24,7 +25,7 @@ const Kuma = () => {
       let maxKumas = await connectedContract.MAX_KUMAS()
 
       if (minted === maxKumas) {
-        texts = ['Sold out, buy kumas in opensea']
+        dispatch(setTexts(['Sold out, buy kumas in opensea?']))
       }
     }
   }
