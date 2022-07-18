@@ -11,11 +11,18 @@ const Kuma = () => {
   const [index, setIndex] = useState(0)
 
   const watchSupplyFunction = async () => {
-    let minted = await connectedContract.totalSupply()
-    let maxKumas = await connectedContract.MAX_KUMAS()
+    const { ethereum } = window;
 
-    if (minted === maxKumas) {
-      texts = ['Sold out, buy kumas in opensea']
+    if (!ethereum) {
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner()
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer)
+      let minted = await connectedContract.totalSupply()
+      let maxKumas = await connectedContract.MAX_KUMAS()
+
+      if (minted === maxKumas) {
+        texts = ['Sold out, buy kumas in opensea']
+      }
     }
   }
 
