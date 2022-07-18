@@ -10,31 +10,27 @@ const Kuma = () => {
   const [ballonVisible, setBallonVisible] = useState(false)
   const [index, setIndex] = useState(0)
 
+  const watchSupply = window.setInterval(watchSupplyFunction, 1000)
+
+  const watchSupplyFunction = async () => {
+    let minted = await connectedContract.totalSupply()
+    let maxKumas = await connectedContract.MAX_KUMAS()
+
+    if (minted === maxKumas) {
+      texts = ['Sold out, buy kumas in opensea']
+
+      clearInterval(watchSupply)
+    }
+  }
+
   useEffect(() => {
     setIndex(index)
   }, [texts])
 
   return (
     <div className={styles.container}>
-      <div className={`${styles.ballon} ${ballonVisible ? styles.visible : ''}`}>
+      <div className={`${styles.ballon} ${styles.visible}`}>
         <Typewriter
-          onInit={(typewriter) => {
-            setBallonVisible(true);
-
-            typewriter.typeString(texts[index] ?? 'Error')
-              .pauseFor(2500)
-              .callFunction(() => {
-                if (texts.length <= index + 1) {
-                  setIndex(0)
-                  return
-                }
-
-                setIndex(index + 1)
-                setBallonVisible(false);
-              })
-              .deleteAll()
-              .start();
-          }}
           options={{
             strings: texts,
             autoStart: true,

@@ -19,6 +19,7 @@
     "@mui/lab": "^5.0.0-alpha.90",
     "@mui/material": "^5.9.0",
     "@reduxjs/toolkit": "^1.8.3",
+    "bignumber.js": "^9.0.2",
     "ethers": "^5.6.9",
     "next": "12.2.2",
     "next-optimized-images": "^2.6.2",

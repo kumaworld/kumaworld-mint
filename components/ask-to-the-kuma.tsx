@@ -26,8 +26,9 @@ const AskToTheKuma = () => {
       console.log(signer)
       let count = await connectedContract.MAX_KUMAS();
 
-      dispatch(setTexts([`There are a total of ${count._hex.substring(3)} Kumas`]))
+      dispatch(setTexts([`There are a total of ${parseInt(count._hex, 16)} Kumas`]))
     }
+    
     const getPrice = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -35,7 +36,7 @@ const AskToTheKuma = () => {
       
       let count = await connectedContract.PRICE()
 
-      dispatch(setTexts([`The price of each kuma after taking the free one is ${count._hex.substring(3)} ethers`]))
+      dispatch(setTexts([`The price of each kuma after taking the free one is ${ethers.utils.formatEther(count)} ethers`]))
     }
     const getQtyFreeMint = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -44,7 +45,7 @@ const AskToTheKuma = () => {
       
       let count = await connectedContract.MAX_FREE_PER_WALLET()
 
-      dispatch(setTexts([`It is ${count._hex.substring(3)} kumas for free per wallet`]))
+      dispatch(setTexts([`It is ${parseInt(count._hex, 16)} kumas for free per wallet`]))
     }
     const getPerWallet = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -53,7 +54,7 @@ const AskToTheKuma = () => {
       
       let count = await connectedContract.MAX_KUMAS_PER_WALLET()
 
-      dispatch(setTexts([`It is ${count._hex.substring(3)} kumas per wallet`]))
+      dispatch(setTexts([`It is ${parseInt(count._hex, 16)} kumas per wallet`]))
     }
     const getTotalMinted = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -63,7 +64,7 @@ const AskToTheKuma = () => {
       let minted = await connectedContract.totalSupply()
       let total = await connectedContract.MAX_KUMAS();
 
-      dispatch(setTexts([`Has already been adopted ${minted._hex.substring(3)}}/${total._hex.substring(3)}} kumas` ]))
+      dispatch(setTexts([`Has already been adopted ${parseInt(minted._hex, 16)}/${parseInt(total._hex, 16)} kumas` ]))
     }
     const getHasStillFree = async () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -73,11 +74,11 @@ const AskToTheKuma = () => {
       let freeKumas = await connectedContract.MAX_FREE_KUMAS_SUPPLY()
       let minted = await connectedContract.totalSupply()
 
-      const stillHasFree = parseInt(minted._hex.substring(3)) < parseInt(freeKumas._hex.substring(3))
+      const stillHasFree = parseInt(minted._hex, 16) < parseInt(freeKumas._hex, 16)
       let texts = ['No more free kumas']
 
       if (stillHasFree) {
-        texts = [`Still have ${parseInt(freeKumas._hex.substring(3)) - parseInt(minted._hex.substring(3))} more kumas to be adopted`] 
+        texts = [`Still have ${parseInt(freeKumas._hex, 16) - parseInt(minted._hex, 16)} more kumas to be adopted`] 
       }
 
       dispatch(setTexts(texts))

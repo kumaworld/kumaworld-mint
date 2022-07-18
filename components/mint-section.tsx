@@ -10,6 +10,7 @@ import { ethers } from 'ethers';
 import KumaWorld from '../utils/KumaWorld.json'
 import { selectKuma, setIsAdopting, setTexts } from '../stores/kuma-slice';
 import { CONTRACT_ADDRESS } from '../utils/constants';
+import BigNumber from 'bignumber.js'
 
 const MintSection = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -43,8 +44,19 @@ const MintSection = (): JSX.Element => {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner()
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer)
+      
+        const price = await connectedContract.PRICE()
+        const minted = await connectedContract.totalSupply()
+        const freeMints = await connectedContract.MAX_FREE_KUMAS_SUPPLY()
 
-        let nftTxn = await connectedContract.mint()
+        let count = qty
+        if (minted < freeMints) {
+          count = qty - 1
+        }
+
+        let mintPrice = count * price
+
+        const nftTxn = await connectedContract.mint(qty, mintPrice)
 
         dispatch(setIsAdopting(true))
         dispatch(setTexts(['Adopting bears...', 'Waiting...', 'Generating kumas...']))
