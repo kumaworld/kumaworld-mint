@@ -40,6 +40,7 @@ const MintSection = (): JSX.Element => {
       const { ethereum } = window;
 
       if (ethereum) {
+        dispatch(setIsAdopting(true))
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner()
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer)
@@ -49,6 +50,9 @@ const MintSection = (): JSX.Element => {
         const freeMints = await connectedContract.MAX_FREE_KUMAS_SUPPLY()
 
         const qtyFreeMinted = await connectedContract.qtyFreeMinted(account)
+        console.log(qtyFreeMinted)
+        console.log(minted)
+        console.log(price)
 
         let count = qty
         if (minted < freeMints && qtyFreeMinted <= 0) {
@@ -57,13 +61,14 @@ const MintSection = (): JSX.Element => {
 
         let mintPrice = count * parseFloat(ethers.utils.formatEther(price))
 
+        console.log(mintPrice)
         const nftTxn = await connectedContract.mint(qty, { value: ethers.BigNumber.from(Number(mintPrice * 1e18).toString()) })
 
-        dispatch(setIsAdopting(true))
         dispatch(setTexts(['Adopting bears...', 'Waiting...', 'Generating kumas...']))
         await nftTxn.wait()
         console.log(nftTxn)
         dispatch(setTexts([`Mined, see transaction in you wallet`]))
+        dispatch(setIsAdopting(false))
       } else {
         console.log("Ethereum object doesn't exist")
         dispatch(setTexts(['First install Metamask', 'Why are you taking so long ?']))
