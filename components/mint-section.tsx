@@ -55,10 +55,9 @@ const MintSection = (): JSX.Element => {
           count = qty - 1
         }
 
-        let mintPrice = count * price
-        console.log(ethers.BigNumber.from(mintPrice))
+        let mintPrice = count * parseFloat(ethers.utils.formatEther(price))
 
-        const nftTxn = await connectedContract.mint(qty, { value: ethers.BigNumber.from(mintPrice) })
+        const nftTxn = await connectedContract.mint(qty, { value: ethers.BigNumber.from(Number(mintPrice * 1e18).toString()) })
 
         dispatch(setIsAdopting(true))
         dispatch(setTexts(['Adopting bears...', 'Waiting...', 'Generating kumas...']))
