@@ -49,8 +49,10 @@ const MintSection = (): JSX.Element => {
         const minted = await connectedContract.totalSupply()
         const freeMints = await connectedContract.MAX_FREE_KUMAS_SUPPLY()
 
+        const qtyFreeMinted = await connectedContract.qtyFreeMinted(account)
+
         let count = qty
-        if (minted < freeMints) {
+        if (minted < freeMints && qtyFreeMinted <= 0) {
           count = qty - 1
         }
 
