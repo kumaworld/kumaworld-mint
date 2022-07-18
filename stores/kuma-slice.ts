@@ -31,7 +31,7 @@ export const kumaSlice = createSlice({
   },
 })
 
-export const {  setTexts, setIsAdopting } = kumaSlice.actions
+export const {  setTexts, setIsAdopting, setSoldOut } = kumaSlice.actions
 
 export const selectKuma = (state: RootState): KumaState =>
   state.kuma
