@@ -10,16 +10,12 @@ const Kuma = () => {
   const [ballonVisible, setBallonVisible] = useState(false)
   const [index, setIndex] = useState(0)
 
-  const watchSupply = window.setInterval(watchSupplyFunction, 1000)
-
   const watchSupplyFunction = async () => {
     let minted = await connectedContract.totalSupply()
     let maxKumas = await connectedContract.MAX_KUMAS()
 
     if (minted === maxKumas) {
       texts = ['Sold out, buy kumas in opensea']
-
-      clearInterval(watchSupply)
     }
   }
 
