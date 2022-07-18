@@ -22,8 +22,6 @@ const AskToTheKuma = () => {
       const signer = provider.getSigner();
       const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, KumaWorld.abi, signer);
       
-      console.log(connectedContract)
-      console.log(signer)
       let count = await connectedContract.MAX_KUMAS();
 
       dispatch(setTexts([`There are a total of ${parseInt(count._hex, 16)} Kumas`]))
