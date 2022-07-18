@@ -58,7 +58,7 @@ const MintSection = (): JSX.Element => {
 
         let mintPrice = count * parseFloat(ethers.utils.formatEther(price))
       
-        const nftTxn = await connectedContract.mint(qty, { value: ethers.utils.parseEther(mintPrice.toString()) })
+        const nftTxn = await connectedContract.adoptKumas(qty, { value: ethers.utils.parseEther(mintPrice.toString()) })
 
         dispatch(setTexts(['Adopting bears...', 'Waiting...', 'Generating kumas...']))
         await nftTxn.wait()
