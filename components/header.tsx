@@ -13,7 +13,9 @@ const Header = (): JSX.Element => {
     <Box width="100%" sx={{ p: "2% 0"  }}>
       <Grid container alignItems="center" justifyItems="center">
         <Grid item xs={2} md={2}>
-          <IconButton sx={{ background: 'white', mr: 2 }}>
+          <IconButton sx={{ background: 'white', mr: 2 }} onClick={() => {
+            window.open('https://twitter.com/TheKumaWorld', '_blank')
+          }}>
             <FaTwitter color="#1DA1F2"/>
           </IconButton>
           <IconButton sx={{ background: 'white' }}>

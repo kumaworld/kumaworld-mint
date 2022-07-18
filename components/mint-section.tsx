@@ -51,7 +51,7 @@ const MintSection = (): JSX.Element => {
 
         const qtyFreeMinted = await connectedContract.qtyFreeMinted(account)
         console.log(parseInt(minted._hex, 16))
-        console.log(parseInt(freeMints._hex, 16)
+        console.log(parseInt(freeMints._hex, 16))
         console.log(parseInt(qtyFreeMinted._hex, 16))
 
         let count = qty
